@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="/qrcode.js"></script>
+    <script type="text/javascript" src="/html5-qrcode.js"></script>
+    <title> Bitcore Address & QR Code Generator </title>
+    <style type="text/css" media="screen">
+        body { text-align:center; }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Bitcore Address</h1>
+    </header>
+    <form action="/BTC" method="GET">
+        <fieldset>
+            <button type="submit">Click me to generate address</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label id="address"></label>
+        </fieldset>
+    </form>
+    <br><br><br>
+
+    <script>
+        var parameters = location.search.substring(1).split("&");
+        var temp = parameters[0].split("=");
+        var innerHTML = unescape(temp[1]);
+        var disableFlag = false;
+        if(innerHTML == 'undefined')   {
+            disableFlag = true;
+        }else   {
+            document.getElementById("address").innerHTML = innerHTML;
+        }
+    </script>
+
+    <div id="qrcode"></div>
+
+    <script type="text/javascript">
+        function updateQRCode(text) {
+            var element = document.getElementById("qrcode");
+            var bodyElement = document.body;
+            if (element.lastChild) {
+                element.replaceChild(showQRCode(text), element.lastChild);
+            }
+            else {
+                element.appendChild(showQRCode(text));
+            }
+
+        }
+        var x = document.getElementById("qrcode");
+        if(!disableFlag)    {
+            updateQRCode(document.getElementById("address").innerHTML);
+        }
+    </script>
+</body>
